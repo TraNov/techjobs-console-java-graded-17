@@ -42,6 +42,9 @@ public class JobData {
             }
         }
 
+        // Bonus mission: sort the results
+        // 1.	Sorting list results
+        Collections.sort(values);
         return values;
     }
 
@@ -50,7 +53,10 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        // Bonus mission; normal version returns allJobs
+        // 2.	Returning a copy of allJobs:
+        return new ArrayList<>(allJobs);
+//        return allJobs;
     }
 
     /**
@@ -75,7 +81,8 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+// TASK 3: MAKE SEARCH METHODS CASE-INSENSITIVE
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -95,8 +102,25 @@ public class JobData {
         loadData();
 
         // TODO - implement this method
-        return null;
+        //  return null;
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        // Loop throw each row of arrayList allJobs
+        for (HashMap<String, String> row : allJobs) {
+            // Loop thru each column\field in the row
+            for (String field : row.keySet()) {
+
+                String aValue = row.get(field);
+                // Check to see if value matches the Value (cell\column\field)
+                if (aValue.toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                }
+            }
+        }
+
+        return jobs;
     }
+
 
     /**
      * Read in data from a CSV file and store it in a list
